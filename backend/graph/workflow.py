@@ -46,6 +46,7 @@ def save_graph_image(app, filename="architecture_flow.png"):
 
 # Instantiate the app
 app = build_graph()
+save_graph_image(app)
 
 # Generate the image when this file is executed directly
 if __name__ == "__main__":

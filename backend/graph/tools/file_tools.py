@@ -32,3 +32,23 @@ def delete_file(filename: str):
         os.remove(filepath)
         return f"Successfully deleted {filename}"
     return f"Error: {filename} does not exist."
+
+@tool
+def update_file(filename: str, old_content: str, new_content: str):
+    """Updates a specific part of a file by replacing old_content with new_content."""
+    filepath = os.path.join(WORKSPACE_DIR, filename)
+    if not os.path.exists(filepath):
+        return f"Error: {filename} not found."
+    
+    with open(filepath, "r") as f:
+        content = f.read()
+        
+    if old_content not in content:
+        return f"Error: Exact old_content string not found in {filename}."
+        
+    updated_content = content.replace(old_content, new_content)
+    
+    with open(filepath, "w") as f:
+        f.write(updated_content)
+        
+    return f"Successfully updated {filename}"

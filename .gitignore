@@ -2,6 +2,12 @@
 # Root .gitignore
 # ========================
 
+# IDEs and Editors
+.vscode/
+
+# AI Generated Outputs / Mock Workspaces
+output_repo/
+
 # --- Python / Backend ---
 .venv/
 venv/
@@ -21,7 +27,7 @@ node_modules/
 .next/
 dist/
 build/
-*.log
+logs/
 
 # --- Project Specific ---
 # Ignore generated graph visualizations to keep the repo size down
