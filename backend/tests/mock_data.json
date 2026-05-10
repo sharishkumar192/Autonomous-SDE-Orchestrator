@@ -1,0 +1,57 @@
+{
+  "supervisor": [
+    {"reasoning": "New task received. Routing to Architect to plan the multi-file calculator.", "next": "Architect"},
+    {"reasoning": "Blueprint created. Routing to Coder to implement the files.", "next": "Coder"},
+    {"reasoning": "Initial code written. Routing to Reviewer.", "next": "Reviewer"},
+    {"reasoning": "Critical vulnerability found in divide.py. Routing back to Coder for patching.", "next": "Coder"},
+    {"reasoning": "Patch applied. Routing to Reviewer for final check.", "next": "Reviewer"},
+    {"reasoning": "Code approved. Finishing workflow.", "next": "FINISH"}
+  ],
+  "architect": [
+    {
+      "summary": "Modular Calculator App",
+      "files_to_create": ["main.py", "add.py", "subtract.py", "multiply.py", "divide.py"],
+      "libraries": [],
+      "core_logic": "Create individual modules for operations and a central main.py entry point."
+    }
+  ],
+  "coder": [
+    {
+      "message": "I have created the 5 requested files.",
+      "files_created": ["main.py", "add.py", "subtract.py", "multiply.py", "divide.py"],
+      "tool_calls": [
+        {"tool": "write_file", "args": {"filename": "add.py", "content": "def add(a, b):\n    return a + b\n"}},
+        {"tool": "write_file", "args": {"filename": "subtract.py", "content": "def subtract(a, b):\n    return a - b\n"}},
+        {"tool": "write_file", "args": {"filename": "multiply.py", "content": "def multiply(a, b):\n    return a * b\n"}},
+        {"tool": "write_file", "args": {"filename": "divide.py", "content": "def divide(a, b):\n    return a / b\n"}},
+        {"tool": "write_file", "args": {"filename": "main.py", "content": "from add import add\nfrom divide import divide\n\nif __name__ == '__main__':\n    print(add(5, 5))\n    print(divide(10, 2))\n"}}
+      ]
+    },
+    {
+      "message": "I have patched the ZeroDivisionError in divide.py.",
+      "files_created": [],
+      "tool_calls": [
+        {
+          "tool": "update_file", 
+          "args": {
+            "filename": "divide.py", 
+            "old_content": "return a / b", 
+            "new_content": "if b == 0:\n        raise ValueError('Cannot divide by zero')\n    return a / b"
+          }
+        }
+      ]
+    }
+  ],
+  "reviewer": [
+    {
+      "is_passed": false,
+      "bugs": ["divide.py: Missing ZeroDivisionError handling."],
+      "feedback": "The divide.py file will crash if b=0. Please use the update_file tool to add an if-statement checking for b == 0."
+    },
+    {
+      "is_passed": true,
+      "bugs": [],
+      "feedback": "Division by zero is now handled safely. All modules look clean. Approved."
+    }
+  ]
+}

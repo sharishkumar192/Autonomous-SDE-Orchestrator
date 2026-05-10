@@ -1,0 +1,38 @@
+# ========================
+# Root .gitignore
+# ========================
+
+# IDEs and Editors
+.vscode/
+
+# AI Generated Outputs / Mock Workspaces
+output_repo/
+
+# --- Python / Backend ---
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.python-version
+
+# --- Environment Variables (CRITICAL) ---
+.env
+.env.*
+!.env.example
+
+# --- Frontend (Future-proofing) ---
+node_modules/
+.next/
+dist/
+build/
+logs/
+
+# --- Project Specific ---
+# Ignore generated graph visualizations to keep the repo size down
+backend/architecture_flow.png
+
+# --- OS Generated ---
+.DS_Store
+Thumbs.db
